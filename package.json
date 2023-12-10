@@ -1,0 +1,21 @@
+{
+  "name": "excel-app",
+  "version": "1.0.0",
+  "description": "Pure JS Excel App",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VadimKolpashchikov/excel-app.git"
+  },
+  "keywords": [
+    "js"
+  ],
+  "author": "Vadim Kolpashchikov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VadimKolpashchikov/excel-app/issues"
+  }
+}
