@@ -1,0 +1,24 @@
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: $header-height;
+  padding: $top-element-padding;
+  background: $primary-bg-color;
+
+  &__input {
+    width: 280px;
+    height: 30px;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    align-items: center;
+  }
+}

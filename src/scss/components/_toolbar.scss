@@ -1,0 +1,23 @@
+.toolbar {
+  position: fixed;
+  top: $header-height;
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  align-items: center;
+  height: $toolbar-height;
+  padding: $top-element-padding;
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+
+  .btn {
+    background: transparent;
+    border: 1px solid $border-color;
+
+    &:hover {
+      color: $primary-color-hover;
+    }
+  }
+}

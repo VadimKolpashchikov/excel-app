@@ -1,0 +1,33 @@
+.formula {
+  position: fixed;
+  top: calc($header-height + $toolbar-height);
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: stretch;
+  height: $formula-height;
+  border-bottom: 1px solid $border-color;
+
+  &__info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: $cell-info-width;
+    font-size: $font-size-h6;
+    font-style: italic;
+    text-align: center;
+    border-right: 1px solid $border-color;
+  }
+
+  &__input {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 4px;
+    color: $cell-text-color;
+    font-size: $font-size-text-small;
+    white-space: nowrap;
+    outline: none;
+  }
+}
