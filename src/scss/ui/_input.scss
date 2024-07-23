@@ -1,0 +1,21 @@
+.input {
+  min-width: 1px;
+  height: 26px;
+  margin: 0;
+  padding: 2px 6px;
+  color: $color-black;
+  font-size: $font-size-input;
+  line-height: 1.1;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  outline: none;
+
+  &:hover,
+  &:focus {
+    border: 1px solid $hover-control-border;
+  }
+
+  &:focus {
+    border: 2px solid $focus-control-border;
+  }
+}

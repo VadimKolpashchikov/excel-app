@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <title>Pure JavaScript Excel</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="excel">
+        <div class="header">
+          <input
+            type="text"
+            class="input header__input"
+            placeholder="Новая таблица"
+            value=""
+          />
+          <div class="header__buttons">
+            <button class="btn" type="button">
+              <i class="material-symbols-outlined"> delete </i>
+            </button>
+            <button class="btn" type="button">
+              <i class="material-symbols-outlined"> logout </i>
+            </button>
+          </div>
+        </div>
+        <div class="toolbar">
+          <button class="btn" type="button">
+            <i class="material-symbols-outlined"> format_bold </i>
+          </button>
+          <button class="btn" type="button">
+            <i class="material-symbols-outlined"> format_italic </i>
+          </button>
+          <button class="btn" type="button">
+            <i class="material-symbols-outlined"> format_underlined </i>
+          </button>
+          <button class="btn" type="button">
+            <i class="material-symbols-outlined"> format_align_left </i>
+          </button>
+          <button class="btn" type="button">
+            <i class="material-symbols-outlined"> format_align_center </i>
+          </button>
+          <button class="btn" type="button">
+            <i class="material-symbols-outlined"> format_align_right </i>
+          </button>
+        </div>
+        <div class="formula">
+          <div class="formula__info">fx</div>
+          <div class="formula__input" contenteditable spellcheck="false"></div>
+        </div>
+        <div class="table">
+          <div class="row row_sticy">
+            <div class="row-info"></div>
+            <div class="row-data">
+              <div class="column">A</div>
+              <div class="column">B</div>
+              <div class="column">C</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-info">1</div>
+            <div class="row-data">
+              <div class="cell selected" contenteditable="">A1</div>
+              <div class="cell" contenteditable="">B1</div>
+              <div class="cell" contenteditable="">C1</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

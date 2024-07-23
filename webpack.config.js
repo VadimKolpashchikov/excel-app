@@ -9,6 +9,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const isDev = !isProd;
 
 const setBundleExtension = (ext) => (isDev ? `bundle.${ext}` : `bundle.[hash].${ext}`);
+
 const getPlugin = () => {
   const plugins = [
     new CleanWebpackPlugin(),
@@ -33,9 +34,7 @@ const getPlugin = () => {
   ];
 
   if (isDev) {
-    plugins.push(
-      new ESLintPlugin(),
-    );
+    plugins.push(new ESLintPlugin());
   }
 
   return plugins;
@@ -73,10 +72,6 @@ module.exports = {
             presets: ['@babel/preset-env'],
           },
         },
-      },
-      {
-        test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.s[ac]ss$/i,

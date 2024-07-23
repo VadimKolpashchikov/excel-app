@@ -1,0 +1,27 @@
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-control;
+  background: $secondary-bg-color;
+  border: none;
+  border-radius: $border-radius-1;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
+  transition: 0.2s all ease-in;
+
+  &:hover {
+    background: $secondary-bg-color-hover;
+  }
+
+  &-white {
+    background: $white-bg-color;
+    border: 1px solid $border-color;
+
+    &:hover {
+      color: $primary-color-hover;
+      border-color: $primary-color-hover;
+    }
+  }
+}

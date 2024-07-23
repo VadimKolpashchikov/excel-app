@@ -1,0 +1,67 @@
+.table {
+  position: fixed;
+  top: $header-height + $toolbar-height + $formula-height;
+  right: 0;
+  left: 0;
+  height: calc(100vh - ($header-height + $toolbar-height + $formula-height));
+  padding-bottom: 1px;
+  overflow-x: auto;
+
+  .row {
+    display: flex;
+    height: $row-basic-height;
+    min-height: 20px;
+
+    &_sticy {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+  }
+
+  .row-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: $cell-info-width;
+    height: 100%;
+    background-color: $info-color;
+    border: 1px solid $border-color;
+    border-top: none;
+  }
+
+  .row-data {
+    display: flex;
+  }
+
+  .column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $cell-basic-width;
+    min-width: $cell-min-width;
+    height: 100%;
+    background-color: $info-color;
+    border-right: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .cell {
+    width: $cell-basic-width;
+    min-width: $cell-min-width;
+    height: 100%;
+    padding: 5px;
+    color: $cell-text-color;
+    white-space: nowrap;
+    border-right: 1px solid $cell-border-color;
+    border-bottom: 1px solid $cell-border-color;
+    outline: none;
+
+    &.selected {
+      position: relative;
+      z-index: 2;
+      outline: 2px solid $focus-control-border;
+      outline-offset: -1px;
+    }
+  }
+}
