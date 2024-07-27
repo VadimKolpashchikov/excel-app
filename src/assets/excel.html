@@ -13,14 +13,14 @@
   <body>
     <div id="app">
       <div class="excel">
-        <div class="header">
+        <div class="excel-header">
           <input
             type="text"
-            class="input header__input"
+            class="input excel-header__input"
             placeholder="Новая таблица"
             value=""
           />
-          <div class="header__buttons">
+          <div class="excel-header__buttons">
             <button class="btn" type="button">
               <i class="material-symbols-outlined"> delete </i>
             </button>
@@ -29,7 +29,7 @@
             </button>
           </div>
         </div>
-        <div class="toolbar">
+        <div class="excel-toolbar">
           <button class="btn" type="button">
             <i class="material-symbols-outlined"> format_bold </i>
           </button>
@@ -49,12 +49,12 @@
             <i class="material-symbols-outlined"> format_align_right </i>
           </button>
         </div>
-        <div class="formula">
-          <div class="formula__info">fx</div>
-          <div class="formula__input" contenteditable spellcheck="false"></div>
+        <div class="excel-formula">
+          <div class="excel-formula__info">fx</div>
+          <div class="excel-formula__input" contenteditable spellcheck="false"></div>
         </div>
-        <div class="table">
-          <div class="row row_sticy">
+        <div class="excel-table">
+          <div class="row">
             <div class="row-info"></div>
             <div class="row-data">
               <div class="column">A</div>
@@ -65,9 +65,9 @@
           <div class="row">
             <div class="row-info">1</div>
             <div class="row-data">
-              <div class="cell selected" contenteditable="">A1</div>
-              <div class="cell" contenteditable="">B1</div>
-              <div class="cell" contenteditable="">C1</div>
+              <div class="cell selected" contenteditable>A1</div>
+              <div class="cell" contenteditable>B1</div>
+              <div class="cell" contenteditable>C1</div>
             </div>
           </div>
         </div>
