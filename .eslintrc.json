@@ -9,7 +9,27 @@
         "sourceType": "module"
     },
     "rules": {
-        "linebreak-style": "off",
-        "no-console": "off"
+        "max-len": [
+            2,
+            {
+                "code": 100,
+                "comments": 100
+            }
+        ],
+        "linebreak-style": 0,
+        "no-console": 0,
+        "import/no-unresolved": 0,
+        "no-debugger": 0,
+        "no-plusplus": [
+            2,
+            {
+                "allowForLoopAfterthoughts": true
+            }
+        ]
+    },
+    "settings": {
+        "import/resolver": {
+            "alias": true
+        }
     }
 }

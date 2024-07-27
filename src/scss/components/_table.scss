@@ -1,4 +1,4 @@
-.table {
+.excel-table {
   position: fixed;
   top: $header-height + $toolbar-height + $formula-height;
   right: 0;
@@ -12,7 +12,7 @@
     height: $row-basic-height;
     min-height: 20px;
 
-    &_sticy {
+    :first-child {
       position: sticky;
       top: 0;
       z-index: 5;
