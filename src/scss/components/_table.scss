@@ -7,12 +7,15 @@
   padding-bottom: 1px;
   overflow-x: auto;
 
+  * {
+    user-select: none;
+  }
+
   .row {
     display: flex;
     height: $row-basic-height;
-    min-height: 20px;
 
-    :first-child {
+    &:first-child {
       position: sticky;
       top: 0;
       z-index: 5;
@@ -20,14 +23,72 @@
   }
 
   .row-info {
+    position: sticky;
+    left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     min-width: $cell-info-width;
     height: 100%;
-    background-color: $info-color;
-    border: 1px solid $border-color;
+    background-color: $white-color-2;
+    border: 1px solid $border-color-1;
     border-top: none;
+  }
+
+  .row-resizer,
+  .col-resizer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background-color: $accent-color-3;
+    opacity: 0;
+
+    &.active {
+      &::before {
+        position: absolute;
+        background: inherit;
+        content: "";
+      }
+    }
+  }
+
+  .row-resizer {
+    width: 100%;
+    height: 3px;
+    transform: translateY(50%);
+
+    &:hover {
+      cursor: row-resize;
+      opacity: 1 !important;
+    }
+
+    &::before {
+      top: 50%;
+      left: 0;
+      width: 100vw;
+      height: 1px;
+      transform: translateY(-50%);
+    }
+  }
+
+  .col-resizer {
+    width: 3px;
+    height: 100%;
+    transform: translateX(50%);
+
+    &:hover {
+      cursor: col-resize;
+      opacity: 1 !important;
+    }
+
+    &::before {
+      top: 0;
+      left: 50%;
+      width: 1px;
+      height: 100vh;
+      transform: translateX(-50%);
+    }
   }
 
   .row-data {
@@ -35,32 +96,32 @@
   }
 
   .column {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     width: $cell-basic-width;
-    min-width: $cell-min-width;
     height: 100%;
-    background-color: $info-color;
-    border-right: 1px solid $border-color;
-    border-bottom: 1px solid $border-color;
+    background-color: $white-color-2;
+    border-right: 1px solid $border-color-1;
+    border-bottom: 1px solid $border-color-1;
   }
 
   .cell {
     width: $cell-basic-width;
-    min-width: $cell-min-width;
     height: 100%;
     padding: 5px;
-    color: $cell-text-color;
+    color: $black-color-3;
     white-space: nowrap;
-    border-right: 1px solid $cell-border-color;
-    border-bottom: 1px solid $cell-border-color;
+    border-right: 1px solid $white-color-4;
+    border-bottom: 1px solid $white-color-4;
     outline: none;
+    user-select: all;
 
     &.selected {
       position: relative;
       z-index: 2;
-      outline: 2px solid $focus-control-border;
+      outline: 2px solid $accent-color-3;
       outline-offset: -1px;
     }
   }

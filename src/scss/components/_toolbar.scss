@@ -9,15 +9,15 @@
   align-items: center;
   height: $toolbar-height;
   padding: $top-element-padding;
-  border-top: 1px solid $border-color;
-  border-bottom: 1px solid $border-color;
+  border-top: 1px solid $border-color-1;
+  border-bottom: 1px solid $border-color-1;
 
   .btn {
     background: transparent;
-    border: 1px solid $border-color;
+    border: 1px solid $border-color-1;
 
     &:hover {
-      color: $primary-color-hover;
+      color: $primary-color-3;
     }
   }
 }
