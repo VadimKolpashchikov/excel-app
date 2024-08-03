@@ -17,13 +17,25 @@
             }
         ],
         "linebreak-style": 0,
-        "no-console": 0,
+        "no-console": 1,
         "import/no-unresolved": 0,
         "no-debugger": 0,
         "no-plusplus": [
             2,
             {
                 "allowForLoopAfterthoughts": true
+            }
+        ],
+        "no-use-before-define": [
+            2,
+            {
+                "functions": false
+            }
+        ],
+        "no-param-reassign": [
+            2,
+            {
+                "props": false
             }
         ]
     },
