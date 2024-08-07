@@ -13,6 +13,16 @@ class Dom {
     return this.$el.outerHTML.trim();
   }
 
+  text(value) {
+    if (!value) {
+      return this.$el.textContent;
+    }
+
+    this.$el.textContent = value;
+
+    return this;
+  }
+
   clear() {
     this.html('');
     return this;

@@ -4,19 +4,23 @@ import { ExcelComponent } from '@core/ExcelComponent';
 export class Formula extends ExcelComponent {
   static $className = 'excel-formula';
 
-  constructor(root) {
+  constructor(root, options = {}) {
     super(root, {
       name: 'Formula',
       listeners: ['input', 'click'],
+      ...options,
     });
   }
 
   onInput(event) {
-    console.log('Formula: onInput', event, this);
+    this.$emit('formulaInput', event.target.textContent);
   }
 
   onClick(event) {
-    console.log('Formula: onClick', event.target.textContent, this);
+    if (event) {
+      return this;
+    }
+    return this;
   }
 
   $html = /* html */`

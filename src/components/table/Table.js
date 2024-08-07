@@ -12,13 +12,14 @@ import { keyMap } from './table.const';
 export class Table extends ExcelComponent {
   static $className = 'excel-table';
 
-  constructor(root) {
+  constructor(root, options = {}) {
     super(root, {
       name: 'Table',
       listeners: [
         'mousedown',
         'keydown',
       ],
+      ...options,
     });
   }
 
@@ -30,6 +31,10 @@ export class Table extends ExcelComponent {
     super.init();
     const startingCell = this.$root.find('[data-id="0:0"]');
     this.selectionManager.select(startingCell);
+
+    this.$subscribe('formulaInput', (text) => {
+      this.selectionManager.current.text(text);
+    });
   }
 
   onMousedown(event) {

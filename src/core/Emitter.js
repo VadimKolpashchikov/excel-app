@@ -4,9 +4,9 @@ export class Emitter {
     this.listeners = {};
   }
 
-  emit(event, ...args) {
+  emit(event, args) {
     this.listeners[event]?.forEach((listener) => {
-      listener(...args);
+      listener(args);
     });
   }
 
