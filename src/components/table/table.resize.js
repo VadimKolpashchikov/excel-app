@@ -30,8 +30,6 @@ function resizeHeight(coordY, resizer, initCoords) {
 /* eslint-disable import/prefer-default-export */
 export function resizeHandler(root, event) {
   const resizeType = event.target.dataset.resize;
-  if (!resizeType) return;
-
   const resizer = $(event.target);
   const resizerParent = resizer.closest('[data-type="resizable"]');
   const initCoords = resizerParent.coords;

@@ -3,9 +3,15 @@
         "composite": true,
         "baseUrl": ".",
         "paths": {
-            "@/*": ["./src/*"],
-            "@core/*": ["./src/core/*"],
-            "@components/*": ["./src/components/*"]
+            "@core/*": [
+                "./src/core/*"
+            ],
+            "@components/*": [
+                "./src/components/*"
+            ],
+            "@/*": [
+                "./src/*"
+            ]
         },
     },
     "exclude": [
