@@ -14,13 +14,11 @@ class Dom {
   }
 
   text(value) {
-    if (!value) {
-      return this.$el.textContent;
+    if (typeof value === 'string') {
+      this.$el.textContent = value;
+      return this;
     }
-
-    this.$el.textContent = value;
-
-    return this;
+    return this.$el.textContent?.trim() ?? this.$el.value?.trim();
   }
 
   clear() {

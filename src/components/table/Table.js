@@ -1,12 +1,12 @@
 import { ExcelComponent } from '@core/ExcelComponent';
 import { $ } from '@core/dom';
+import { keyMap } from '@core/const';
 import { createTable } from './table.template';
 import { resizeHandler } from './table.resize';
 import { TableSelection } from './TableSelection';
 import {
   isResizable, isCell, matrix, nextSelector,
 } from './table.utils';
-import { keyMap } from './table.const';
 
 /* eslint-disable import/prefer-default-export */
 export class Table extends ExcelComponent {
@@ -18,6 +18,7 @@ export class Table extends ExcelComponent {
       listeners: [
         'mousedown',
         'keydown',
+        'input',
       ],
       ...options,
     });
@@ -30,11 +31,25 @@ export class Table extends ExcelComponent {
   init() {
     super.init();
     const startingCell = this.$root.find('[data-id="0:0"]');
-    this.selectionManager.select(startingCell);
+    this.selectCell(startingCell);
 
-    this.$subscribe('formulaInput', (text) => {
+    this.$on('formula:done', () => {
+      this.selectionManager.current.focus();
+    });
+
+    this.$on('formula:input', (text) => {
       this.selectionManager.current.text(text);
     });
+  }
+
+  selectCell(cell) {
+    if (!cell) return;
+    this.selectionManager.select(cell);
+    this.$emit('table:select', cell);
+  }
+
+  onInput() {
+    this.$emit('table:input', this.selectionManager.current);
   }
 
   onMousedown(event) {
@@ -50,6 +65,7 @@ export class Table extends ExcelComponent {
         this.selectionManager.selectGroup(cells);
       } else {
         this.selectionManager.select(target);
+        this.$emit('table:select', target);
       }
     }
   }
@@ -63,10 +79,7 @@ export class Table extends ExcelComponent {
       event.preventDefault();
 
       const nextCell = this.$root.find(nextSelector(key, this.selectionManager.current));
-
-      if (nextCell) {
-        this.selectionManager.select(nextCell);
-      }
+      this.selectCell(nextCell);
     }
 
     return this;

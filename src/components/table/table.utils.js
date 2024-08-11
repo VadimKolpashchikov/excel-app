@@ -1,4 +1,4 @@
-import { keyMap } from './table.const';
+import { keyMap } from '@core/const';
 
 export function isResizable(event) {
   return !!event.target.dataset.resize;

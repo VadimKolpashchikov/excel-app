@@ -1,4 +1,6 @@
 import { ExcelComponent } from '@core/ExcelComponent';
+import { keyMap } from '@core/const';
+import { $ } from '@core/dom';
 
 /* eslint-disable import/prefer-default-export */
 export class Formula extends ExcelComponent {
@@ -7,13 +9,38 @@ export class Formula extends ExcelComponent {
   constructor(root, options = {}) {
     super(root, {
       name: 'Formula',
-      listeners: ['input', 'click'],
+      listeners: ['input', 'click', 'keydown'],
       ...options,
     });
   }
 
+  init() {
+    super.init();
+    this.formula = this.$root.find('[data-type="formula"]');
+
+    this.$on('table:select', (cell) => {
+      this.formula?.text(cell.text());
+    });
+
+    this.$on('table:input', (cell) => {
+      this.formula?.text(cell.text());
+    });
+  }
+
   onInput(event) {
-    this.$emit('formulaInput', event.target.textContent);
+    this.$emit('formula:input', $(event.target).text());
+  }
+
+  onKeydown(event) {
+    switch (event.key) {
+      case keyMap.tab:
+      case keyMap.enter:
+        event.preventDefault();
+        this.$emit('formula:done');
+        break;
+      default:
+        break;
+    }
   }
 
   onClick(event) {
@@ -25,6 +52,12 @@ export class Formula extends ExcelComponent {
 
   $html = /* html */`
     <div class="excel-formula__info">fx</div>
-    <div class="excel-formula__input" contenteditable spellcheck="false"></div>
+    <div 
+      class="excel-formula__input" 
+      contenteditable 
+      spellcheck="false"
+      data-type="formula"
+      >
+      </div>
   `;
 }
