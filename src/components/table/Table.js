@@ -1,6 +1,7 @@
 import { ExcelComponent } from '@core/ExcelComponent';
 import { $ } from '@core/dom';
 import { keyMap } from '@core/const';
+import { actions } from '@store';
 import { createTable } from './table.template';
 import { resizeHandler } from './table.resize';
 import { TableSelection } from './TableSelection';
@@ -49,12 +50,23 @@ export class Table extends ExcelComponent {
   }
 
   onInput() {
-    this.$emit('table:input', this.selectionManager.current);
+    const value = this.selectionManager.current.text();
+    const id = this.selectionManager.current.id();
+    this.$emit('table:input', value);
+    this.$dispatch(actions.tableInput({ [id]: value }));
+  }
+
+  resizeTable(event) {
+    resizeHandler(this.$root, event)
+      .then((data) => {
+        this.$dispatch(actions.tableResize(data));
+      })
+      .catch(() => { throw new Error('Table resize error'); });
   }
 
   onMousedown(event) {
     if (isResizable(event)) {
-      resizeHandler(this.$root, event);
+      this.resizeTable(event);
     } else if (isCell(event)) {
       const target = $(event.target);
 
@@ -64,8 +76,7 @@ export class Table extends ExcelComponent {
 
         this.selectionManager.selectGroup(cells);
       } else {
-        this.selectionManager.select(target);
-        this.$emit('table:select', target);
+        this.selectCell(target);
       }
     }
   }
@@ -85,5 +96,5 @@ export class Table extends ExcelComponent {
     return this;
   }
 
-  $html = createTable(150);
+  $html = createTable(150, this.$store.getState());
 }
