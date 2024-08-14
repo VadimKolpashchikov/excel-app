@@ -1,11 +1,19 @@
 import * as types from './actionsTypes';
 /* eslint-disable import/prefer-default-export */
-export function rootReducer(state, action) {
-  switch (action.type) {
+export function rootReducer(state, { type, data = {} }) {
+  let assister;
+  switch (type) {
     case types.TABLE_RESIZE:
-      return { ...state, colState: { ...state.colState, ...action.data } };
+      assister = `${data.type}State`;
+      return {
+        ...state,
+        [assister]: {
+          ...state[assister],
+          [data.id]: data.value,
+        },
+      };
     case types.TABLE_INPUT:
-      return { ...state, cellState: { ...state.cellState, ...action.data } };
+      return { ...state, cellState: { ...state.cellState, ...data } };
     default:
       return state;
   }

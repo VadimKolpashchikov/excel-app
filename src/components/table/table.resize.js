@@ -30,11 +30,11 @@ function resizeHeight(coordY, resizer, initCoords) {
 /* eslint-disable import/prefer-default-export */
 export function resizeHandler(root, event) {
   return new Promise((resolve) => {
-    const resizeType = event.target.dataset.resize;
     const resizer = $(event.target);
+    const resizeType = resizer.data.resize;
     const resizerParent = resizer.closest('[data-type="resizable"]');
     const initCoords = resizerParent.coords;
-    const dataId = resizerParent.data.col;
+    const dataId = resizerParent.data[resizeType];
     let value;
 
     resizer.addClass('active')
@@ -59,7 +59,9 @@ export function resizeHandler(root, event) {
       }
 
       resolve({
-        [dataId]: value,
+        type: resizeType,
+        id: dataId,
+        value,
       });
 
       resizer.removeClass('active')
