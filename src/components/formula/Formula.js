@@ -21,11 +21,13 @@ export class Formula extends ExcelComponent {
     this.$on('table:select', (cell) => {
       this.formula?.text(cell.text());
     });
-
-    this.$subscribe((state) => {
-      this.formula?.text(state.currentText);
-    });
   }
+
+  watchers = {
+    currentText(newVal) {
+      this.formula?.text(newVal);
+    },
+  };
 
   onInput(event) {
     this.$emit('formula:input', $(event.target).text());

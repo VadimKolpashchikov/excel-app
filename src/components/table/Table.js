@@ -44,6 +44,12 @@ export class Table extends ExcelComponent {
     });
   }
 
+  watchers = {
+    colState(newVal, oldVal) {
+      console.log(newVal, oldVal);
+    },
+  };
+
   selectCell(cell) {
     if (!cell) return;
     this.selectionManager.select(cell);

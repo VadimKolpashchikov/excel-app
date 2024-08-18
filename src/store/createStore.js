@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash.clonedeep';
+
 /* eslint-disable import/prefer-default-export */
 export function createStore(rootReducer, initialState = {}) {
   let state = rootReducer({ ...initialState }, { type: '__INIT__' });
@@ -18,15 +20,17 @@ export function createStore(rootReducer, initialState = {}) {
       listeners.forEach((listener) => listener(state));
     },
     getState(...args) {
+      const cloneState = cloneDeep(state);
+      if (args.length === 1) {
+        return cloneState[args[0]];
+      }
       if (args.length > 1) {
         return args.reduce((acc, arg) => {
-          acc[arg] = state[arg];
+          acc[arg] = cloneState[arg];
           return acc;
         }, {});
-      } if (args.length === 1) {
-        return state[args[0]];
       }
-      return state;
+      return cloneState;
     },
   };
 }
