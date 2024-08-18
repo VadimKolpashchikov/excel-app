@@ -14,18 +14,18 @@ function getSizeParam(state, index, defaultValue = 1) {
   return `${value}px`;
 }
 
-function getCellContent(row, col, state) {
-  return state[`${row}:${col}`] ?? '';
+function getCellContent(id, state) {
+  return state[id] ?? '';
 }
 
-function createCell(content, rowIndex, colIndex, width) {
+function createCell(content, colIndex, id, width) {
   return /* html */`
   <div 
     class="cell" 
     contenteditable
     data-type="cell"
     data-col="${colIndex}" 
-    data-id="${rowIndex}:${colIndex}"
+    data-id="${id}"
     style="width: ${width}"
   >
   ${content}
@@ -48,10 +48,11 @@ function createCol(content, index, width) {
 }
 
 function maperCell({ colState = {}, cellState = {} }, rowIndex) {
-  return (_, colIndex) => {
-    const width = getSizeParam(colState, colIndex, DEFAULT_WIDTH);
-    const content = getCellContent(rowIndex, colIndex, cellState);
-    return createCell(content, rowIndex, colIndex, width);
+  return (_, index) => {
+    const width = getSizeParam(colState, index, DEFAULT_WIDTH);
+    const cellId = `${rowIndex}:${index}`;
+    const content = getCellContent(cellId, cellState);
+    return createCell(content, index, cellId, width);
   };
 }
 
@@ -63,14 +64,21 @@ function maperCol(state = {}) {
   };
 }
 
-function createRow(idx, content, state = {}) {
-  const infoContent = idx ? `${idx}<div class="row-resizer resizer" data-resize="row"></div>` : '';
-  const dataAtrs = idx ? `data-type="resizable" data-row="${idx}"` : '';
-  const height = getSizeParam(state, idx, DEFAULT_HEIGHT);
+function createRow(index, content, state = {}) {
+  const infoContent = index
+    ? /* html */`
+        ${index}
+        <div class="row-resizer resizer" data-resize="row"></div>
+      `
+    : '';
+  const dataAttrs = index
+    ? `data-type="resizable" data-row="${index}"`
+    : '';
+  const height = getSizeParam(state, index, DEFAULT_HEIGHT);
   return /* html */`
   <div 
     class="row" 
-    ${dataAtrs}
+    ${dataAttrs}
     style="height: ${height}"
   >
     <div class="row-info">

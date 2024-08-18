@@ -40,6 +40,7 @@ export class Table extends ExcelComponent {
 
     this.$on('formula:input', (text) => {
       this.selectionManager.current.text(text);
+      this.updateCellState();
     });
   }
 
@@ -49,11 +50,15 @@ export class Table extends ExcelComponent {
     this.$emit('table:select', cell);
   }
 
-  onInput() {
-    const value = this.selectionManager.current.text();
+  updateCellState() {
     const id = this.selectionManager.current.id();
-    this.$emit('table:input', value);
-    this.$dispatch(actions.tableInput({ [id]: value }));
+    const text = this.selectionManager.current.text();
+
+    this.$dispatch(actions.changeText({ id, text }));
+  }
+
+  onInput() {
+    this.updateCellState();
   }
 
   resizeTable(event) {

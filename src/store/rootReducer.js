@@ -12,8 +12,12 @@ export function rootReducer(state, { type, data = {} }) {
           [data.id]: data.value,
         },
       };
-    case types.TABLE_INPUT:
-      return { ...state, cellState: { ...state.cellState, ...data } };
+    case types.CHANGE_TEXT:
+      return {
+        ...state,
+        currentText: data.text,
+        cellState: { ...state.cellState, [data.id]: data.text },
+      };
     default:
       return state;
   }

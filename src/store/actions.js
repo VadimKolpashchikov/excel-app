@@ -7,9 +7,9 @@ export function tableResize(data) {
   };
 }
 
-export function tableInput(data) {
+export function changeText(data) {
   return {
-    type: types.TABLE_INPUT,
+    type: types.CHANGE_TEXT,
     data,
   };
 }
