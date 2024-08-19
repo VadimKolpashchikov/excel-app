@@ -32,8 +32,8 @@ export class ExcelComponent extends DomListener {
     this.$store.dispatch(action);
   }
 
-  getHTML() {
-    return this.$html;
+  get template() {
+    return this.$template;
   }
 
   init() {

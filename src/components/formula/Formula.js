@@ -52,7 +52,7 @@ export class Formula extends ExcelComponent {
     return this;
   }
 
-  $html = /* html */`
+  $template = /* html */`
     <div class="excel-formula__info">fx</div>
     <div 
       class="excel-formula__input" 

@@ -11,7 +11,7 @@ export class Header extends ExcelComponent {
     });
   }
 
-  $html = /* html */`
+  $template = /* html */`
     <input
       type="text"
       class="input excel-header__input"

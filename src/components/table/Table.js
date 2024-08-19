@@ -107,5 +107,5 @@ export class Table extends ExcelComponent {
     return this;
   }
 
-  $html = createTable(150, this.$store.getState());
+  $template = createTable(150, this.$store.getState());
 }

@@ -11,7 +11,7 @@ export class Toolbar extends ExcelComponent {
     });
   }
 
-  $html = /* html */`
+  $template = /* html */`
     <button class="btn" type="button">
       <i class="material-symbols-outlined"> format_bold </i>
     </button>

@@ -25,7 +25,7 @@ export class Excel {
     this.components = this.components.map((Component) => {
       const el = $.createEl('div', Component.$className);
       const component = new Component(el, componetsOptions);
-      el.html(component.getHTML());
+      el.html(component.template);
       root.append(el);
 
       return component;
