@@ -1,6 +1,6 @@
 import { ExcelComponent } from '@core/ExcelComponent';
 import { $ } from '@core/dom';
-import { keyMap } from '@core/const';
+import * as keyMap from '@const/keyboardKeys';
 import { actions } from '@store';
 import { createTable } from './table.template';
 import { resizeHandler } from './table.resize';
@@ -42,6 +42,12 @@ export class Table extends ExcelComponent {
       this.selectionManager.current.text(text);
       this.updateCellState();
     });
+
+    this.$on('toolbar:applyStyle', (styles) => {
+      this.selectionManager.applyStyles(styles, (cell) => {
+        this.$dispatch(actions.applyStyle({ id: cell.id(), styles }));
+      });
+    });
   }
 
   watchers = {
@@ -54,6 +60,11 @@ export class Table extends ExcelComponent {
     if (!cell) return;
     this.selectionManager.select(cell);
     this.$emit('table:select', cell);
+  }
+
+  selectCells(cells) {
+    this.selectionManager.selectGroup(cells);
+    this.$emit('table:selectGroup', cells);
   }
 
   updateCellState() {
@@ -85,7 +96,7 @@ export class Table extends ExcelComponent {
         const cells = matrix(target, this.selectionManager.current)
           .map((id) => this.$root.find(`[data-id="${id}"]`));
 
-        this.selectionManager.selectGroup(cells);
+        this.selectCells(cells);
       } else {
         this.selectCell(target);
       }

@@ -15,7 +15,7 @@ function getSizeParam(state, index, defaultValue = 1) {
 }
 
 function getCellContent(id, state) {
-  return state[id] ?? '';
+  return state[id]?.text ?? '';
 }
 
 function createCell(content, colIndex, id, width) {

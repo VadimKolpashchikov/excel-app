@@ -1,5 +1,5 @@
 import { ExcelComponent } from '@core/ExcelComponent';
-import { keyMap } from '@core/const';
+import * as keyMap from '@const/keyboardKeys';
 import { $ } from '@core/dom';
 
 /* eslint-disable import/prefer-default-export */
@@ -35,8 +35,8 @@ export class Formula extends ExcelComponent {
 
   onKeydown(event) {
     switch (event.key) {
-      case keyMap.tab:
-      case keyMap.enter:
+      case keyMap.TAB:
+      case keyMap.ENTER:
         event.preventDefault();
         this.$emit('formula:done');
         break;

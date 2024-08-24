@@ -33,7 +33,7 @@ export class ExcelComponent extends DomListener {
   }
 
   get template() {
-    return this.$template;
+    return this.$template ?? '';
   }
 
   init() {

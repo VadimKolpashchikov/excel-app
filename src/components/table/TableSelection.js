@@ -26,4 +26,11 @@ export class TableSelection {
       return cell;
     });
   }
+
+  applyStyles(styles = {}, cb = null) {
+    this.group.forEach((el) => {
+      el.css(styles);
+      cb?.(el);
+    });
+  }
 }

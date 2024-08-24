@@ -96,19 +96,47 @@ class Dom {
     return this.$el.getBoundingClientRect();
   }
 
-  css(styles = {}) {
-    if (typeof styles === 'string') {
-      return window.getComputedStyle(this.$el)[styles];
+  css(styles) {
+    if (!styles) {
+      return this.$el.style;
     }
 
-    Object.entries(styles).forEach(([key, value]) => {
-      if (key.slice(0, 2) === '--') {
-        this.$el.style.setProperty(key, value);
-      }
-      this.$el.style[key] = value;
-    });
+    if (typeof styles === 'string') {
+      const { style: elStyle } = this.$el;
 
-    return this;
+      if (Object.prototype.hasOwnProperty.call(elStyle, styles)) {
+        return elStyle[styles];
+      }
+
+      return null;
+    }
+
+    if (Array.isArray(styles)) {
+      const preparedStyles = styles.reduce((result, key) => {
+        const value = this.css(key.toString());
+        if (value) {
+          result[key] = value;
+        }
+        return result;
+      }, {});
+
+      return Object.keys(preparedStyles).length
+        ? preparedStyles
+        : null;
+    }
+
+    if (typeof styles === 'object') {
+      Object.entries(styles).forEach(([key, value]) => {
+        if (key.slice(0, 2) === '--') {
+          this.$el.style.setProperty(key, value);
+        }
+        this.$el.style[key] = value;
+      });
+
+      return this;
+    }
+
+    return null;
   }
 
   focus() {

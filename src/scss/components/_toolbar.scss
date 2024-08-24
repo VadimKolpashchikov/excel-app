@@ -19,5 +19,11 @@
     &:hover {
       color: $primary-color-3;
     }
+
+    &.active {
+      color: $white-color-1;
+      background-color: $primary-color-3;
+      border-color: $primary-color-3;
+    }
   }
 }
