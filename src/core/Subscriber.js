@@ -3,19 +3,28 @@ import isEqual from 'lodash.isequal';
 /* eslint-disable import/prefer-default-export */
 export class Subscriber {
   constructor(store) {
-    this.store = store;
+    this.$store = store;
     this.sub = null;
     this.prevState = null;
   }
 
   subscribeComponents(components = []) {
-    this.prevState = this.store.getState();
+    this.prevState = this.$store.getState();
 
-    const componentsWithWatchers = components
-      .filter((component) => component.watchers);
+    const [componentsWithWatchers, watchersKeys] = components
+      .reduce((acc, component) => {
+        if (component.watchers) {
+          acc[0].push(component);
+          acc[1].push(...Object.keys(component.watchers));
+        }
 
-    this.sub = this.store.subscribe((state) => {
-      Object.keys(state).forEach((key) => {
+        return acc;
+      }, [[], []]);
+
+    const keys = [...new Set(watchersKeys)];
+
+    this.sub = this.$store.subscribe((state) => {
+      keys.forEach((key) => {
         const value = state[key];
         const prevValue = this.prevState[key];
 
@@ -26,7 +35,7 @@ export class Subscriber {
         }
       });
 
-      this.prevState = this.store.getState();
+      this.prevState = this.$store.getState();
     });
   }
 

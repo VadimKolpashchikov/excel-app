@@ -24,7 +24,7 @@ export class Formula extends ExcelComponent {
   }
 
   watchers = {
-    currentText(newVal) {
+    lastText(newVal) {
       this.formula?.text(newVal);
     },
   };

@@ -27,10 +27,13 @@ export class TableSelection {
     });
   }
 
-  applyStyles(styles = {}, cb = null) {
+  get selectedIds() {
+    return this.group.map((cell) => cell.id());
+  }
+
+  applyStyles(styles = {}) {
     this.group.forEach((el) => {
       el.css(styles);
-      cb?.(el);
     });
   }
 }

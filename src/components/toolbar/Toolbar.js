@@ -23,16 +23,19 @@ export class Toolbar extends StateComponent {
     super.init();
 
     this.$on('table:select', (cell) => {
-      const cellStyles = {
+      this.setState({
         ...defaultStyles,
         ...cell.css(Object.keys(defaultStyles)),
-      };
-      this.setState(cellStyles);
+      });
     });
 
     this.$on('table:selectGroup', () => {
-      this.setState(defaultStyles);
+      this.resetState();
     });
+  }
+
+  resetState() {
+    this.setState({ ...defaultStyles });
   }
 
   get template() {
@@ -45,10 +48,14 @@ export class Toolbar extends StateComponent {
     const target = $(event.target);
     const { type, value } = target.data;
 
-    if (type === 'button' && value) {
-      const newValue = JSON.parse(value);
-      this.setState(newValue);
-      this.$emit('toolbar:applyStyle', newValue);
+    if (type && value) {
+      if (type === 'button' && value) {
+        const newValue = JSON.parse(value);
+        this.setState(newValue);
+      } else if (type === 'reset') {
+        this.resetState();
+      }
+      this.$emit('toolbar:applyStyle', this.state);
     }
   }
 

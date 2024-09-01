@@ -18,7 +18,7 @@ class Dom {
       this.$el.textContent = value;
       return this;
     }
-    return this.$el.textContent?.trim() ?? this.$el.value?.trim();
+    return this.$el.textContent?.trim() || this.$el.value?.trim();
   }
 
   clear() {
@@ -100,7 +100,6 @@ class Dom {
     if (!styles) {
       return this.$el.style;
     }
-
     if (typeof styles === 'string') {
       const { style: elStyle } = this.$el;
 
@@ -110,7 +109,6 @@ class Dom {
 
       return null;
     }
-
     if (Array.isArray(styles)) {
       const preparedStyles = styles.reduce((result, key) => {
         const value = this.css(key.toString());
@@ -124,7 +122,6 @@ class Dom {
         ? preparedStyles
         : null;
     }
-
     if (typeof styles === 'object') {
       Object.entries(styles).forEach(([key, value]) => {
         if (key.slice(0, 2) === '--') {
@@ -135,7 +132,6 @@ class Dom {
 
       return this;
     }
-
     return null;
   }
 

@@ -5,14 +5,16 @@ import { Formula } from '@components/formula/Formula';
 import { Table } from '@components/table/Table';
 import './scss/style.scss';
 import { createStore, rootReducer } from '@store';
-import { storage } from '@core/utils';
+import { debounce, storage } from '@core/utils';
 
 const EXCEL_STORAGE_NAME = 'exele-state';
 const store = createStore(rootReducer, storage(EXCEL_STORAGE_NAME) ?? {});
 
-store.subscribe((state) => {
+const storageStateListener = debounce((state) => {
   storage(EXCEL_STORAGE_NAME, state);
 });
+
+store.subscribe(storageStateListener);
 
 const excel = new Excel('#app', {
   store,

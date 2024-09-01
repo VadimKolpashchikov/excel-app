@@ -44,9 +44,11 @@ export class Table extends ExcelComponent {
     });
 
     this.$on('toolbar:applyStyle', (styles) => {
-      this.selectionManager.applyStyles(styles, (cell) => {
-        this.$dispatch(actions.applyStyle({ id: cell.id(), styles }));
-      });
+      this.selectionManager.applyStyles(styles);
+      this.$dispatch(actions.applyStyles({
+        ids: this.selectionManager.selectedIds,
+        styles,
+      }));
     });
   }
 

@@ -17,16 +17,23 @@ export function rootReducer(state, { type, data = {} }) {
       assister.text = data.text;
       return {
         ...state,
-        currentText: data.text,
+        lastText: data.text,
         cellState: { ...state.cellState, [data.id]: assister },
       };
-    case types.APPLY_STYLE:
-      assister = state.cellState?.[data.id] ?? {};
-      assister.styles = { ...assister.styles, ...data.styles };
+    case types.APPLY_STYLES:
+      assister = data.ids?.reduce((acc, id) => {
+        const cell = state.cellState?.[id] ?? {};
+        cell.styles = { ...cell.styles, ...data.styles };
+        acc[id] = cell;
+        return acc;
+      }, {});
+
       return {
         ...state,
-        cellState: { ...state.cellState, [data.id]: assister },
+        cellState: { ...state.cellState, ...assister },
       };
+    case types.CHANGE_TITLE:
+      return { ...state, title: data.title };
     default:
       return state;
   }

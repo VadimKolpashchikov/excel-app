@@ -1,3 +1,5 @@
+import { kebabize } from '@core/utils';
+
 const KEY_CODE_MAP = {
   A: 65,
   Z: 90,
@@ -14,11 +16,22 @@ function getSizeParam(state, index, defaultValue = 1) {
   return `${value}px`;
 }
 
-function getCellContent(id, state) {
-  return state[id]?.text ?? '';
+function getCellData(id, state) {
+  const cell = state[id];
+  if (!cell) return null;
+
+  const content = cell.text ?? '';
+  const styles = cell.styles
+    ? Object.entries(cell.styles).map(([key, value]) => `${kebabize(key)}:${value}`).join(';')
+    : '';
+
+  return {
+    content,
+    styles,
+  };
 }
 
-function createCell(content, colIndex, id, width) {
+function createCell(content, colIndex, id, styles) {
   return /* html */`
   <div 
     class="cell" 
@@ -26,7 +39,7 @@ function createCell(content, colIndex, id, width) {
     data-type="cell"
     data-col="${colIndex}" 
     data-id="${id}"
-    style="width: ${width}"
+    style="${styles}"
   >
   ${content}
   </div>
@@ -51,8 +64,16 @@ function maperCell({ colState = {}, cellState = {} }, rowIndex) {
   return (_, index) => {
     const width = getSizeParam(colState, index, DEFAULT_WIDTH);
     const cellId = `${rowIndex}:${index}`;
-    const content = getCellContent(cellId, cellState);
-    return createCell(content, index, cellId, width);
+    let styles = `width:${width};`;
+    let content = '';
+
+    const cellData = getCellData(cellId, cellState);
+    if (cellData) {
+      styles = `${styles};${cellData.styles}`;
+      content = cellData.content;
+    }
+
+    return createCell(content, index, cellId, styles);
   };
 }
 
