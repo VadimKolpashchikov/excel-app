@@ -14,11 +14,11 @@ class Dom {
   }
 
   text(value) {
-    if (typeof value === 'string') {
+    if (typeof value !== 'undefined') {
       this.$el.textContent = value;
       return this;
     }
-    return this.$el.textContent?.trim() || this.$el.value?.trim();
+    return this.$el.textContent?.trim() || this.$el.value?.trim() || '';
   }
 
   clear() {
@@ -70,12 +70,15 @@ class Dom {
   }
 
   attr(name, value) {
-    if (!value) {
+    if (value) {
+      this.$el.setAttribute(name, value);
+      return this;
+    }
+    if (typeof value === 'undefined') {
       return this.$el.getAttribute(name);
     }
 
-    this.$el.setAttribute(name, value);
-
+    this.$el.removeAttribute(name);
     return this;
   }
 

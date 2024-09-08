@@ -19,12 +19,13 @@ export class Formula extends ExcelComponent {
     this.formula = this.$root.find('[data-type="formula"]');
 
     this.$on('table:select', (cell) => {
-      this.formula?.text(cell.text());
+      const formulaText = cell.data.value ?? '';
+      this.formula?.text(formulaText);
     });
   }
 
   watchers = {
-    lastText(newVal) {
+    lastInputValue(newVal) {
       this.formula?.text(newVal);
     },
   };

@@ -21,6 +21,13 @@ export function applyStyles(data) {
   };
 }
 
+export function applyValue(data) {
+  return {
+    type: types.APPLY_VALUE,
+    data,
+  };
+}
+
 export function changeTitle(data) {
   return {
     type: types.CHANGE_TITLE,

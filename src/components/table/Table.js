@@ -38,9 +38,12 @@ export class Table extends ExcelComponent {
       this.selectionManager.current.focus();
     });
 
-    this.$on('formula:input', (text) => {
-      this.selectionManager.current.text(text);
-      this.updateCellState();
+    this.$on('formula:input', (value) => {
+      this.selectionManager.applyValue(value);
+      this.$dispatch(actions.applyValue({
+        ids: this.selectionManager.selectedIds,
+        value,
+      }));
     });
 
     this.$on('toolbar:applyStyle', (styles) => {
@@ -51,12 +54,6 @@ export class Table extends ExcelComponent {
       }));
     });
   }
-
-  watchers = {
-    colState(newVal, oldVal) {
-      console.log(newVal, oldVal);
-    },
-  };
 
   selectCell(cell) {
     if (!cell) return;
@@ -69,15 +66,11 @@ export class Table extends ExcelComponent {
     this.$emit('table:selectGroup', cells);
   }
 
-  updateCellState() {
-    const id = this.selectionManager.current.id();
-    const text = this.selectionManager.current.text();
-
-    this.$dispatch(actions.changeText({ id, text }));
-  }
-
   onInput() {
-    this.updateCellState();
+    const { current } = this.selectionManager;
+    current.attr('data-value', current.text());
+    const { id, value } = current.data;
+    this.$dispatch(actions.changeText({ id, value }));
   }
 
   resizeTable(event) {

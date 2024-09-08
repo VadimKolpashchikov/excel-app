@@ -1,3 +1,4 @@
+import { parseExpression } from '@core/parser';
 import { kebabize } from '@core/utils';
 
 const KEY_CODE_MAP = {
@@ -20,7 +21,7 @@ function getCellData(id, state) {
   const cell = state[id];
   if (!cell) return null;
 
-  const content = cell.text ?? '';
+  const content = cell.value ?? cell.text ?? '';
   const styles = cell.styles
     ? Object.entries(cell.styles).map(([key, value]) => `${kebabize(key)}:${value}`).join(';')
     : '';
@@ -32,6 +33,8 @@ function getCellData(id, state) {
 }
 
 function createCell(content, colIndex, id, styles) {
+  const dataValue = content ? `data-value="${content}"` : '';
+
   return /* html */`
   <div 
     class="cell" 
@@ -39,10 +42,9 @@ function createCell(content, colIndex, id, styles) {
     data-type="cell"
     data-col="${colIndex}" 
     data-id="${id}"
+    ${dataValue}
     style="${styles}"
-  >
-  ${content}
-  </div>
+  >${parseExpression(content)}</div>
   `;
 }
 
@@ -69,7 +71,7 @@ function maperCell({ colState = {}, cellState = {} }, rowIndex) {
 
     const cellData = getCellData(cellId, cellState);
     if (cellData) {
-      styles = `${styles};${cellData.styles}`;
+      styles += `;${cellData.styles}`;
       content = cellData.content;
     }
 

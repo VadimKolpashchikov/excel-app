@@ -14,11 +14,24 @@ export function rootReducer(state, { type, data = {} }) {
       };
     case types.CHANGE_TEXT:
       assister = state.cellState?.[data.id] ?? {};
-      assister.text = data.text;
+      assister.value = data.value;
       return {
         ...state,
-        lastText: data.text,
+        lastInputValue: data.value ?? '',
         cellState: { ...state.cellState, [data.id]: assister },
+      };
+    case types.APPLY_VALUE:
+      assister = data.ids?.reduce((acc, id) => {
+        const cell = state.cellState?.[id] ?? {};
+        cell.value = data.value;
+        acc[id] = cell;
+        return acc;
+      }, {});
+
+      return {
+        ...state,
+        lastInputValue: data.value ?? '',
+        cellState: { ...state.cellState, ...assister },
       };
     case types.APPLY_STYLES:
       assister = data.ids?.reduce((acc, id) => {
