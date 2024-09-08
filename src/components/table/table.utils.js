@@ -1,4 +1,4 @@
-import { keyMap } from '@core/const';
+import * as keyMap from '@const/keyboardKeys';
 
 export function isResizable(event) {
   return !!event.target.dataset.resize;
@@ -38,18 +38,18 @@ export function matrix(target, current) {
 export function nextSelector(key, current) {
   let { row, col } = current.id({ parse: true });
   switch (key) {
-    case keyMap.enter:
-    case keyMap.down:
+    case keyMap.ENTER:
+    case keyMap.DOWN:
       row += 1;
       break;
-    case keyMap.tab:
-    case keyMap.right:
+    case keyMap.TAB:
+    case keyMap.RIGHT:
       col += 1;
       break;
-    case keyMap.left:
+    case keyMap.LEFT:
       col -= 1;
       break;
-    case keyMap.up:
+    case keyMap.UP:
       row -= 1;
       break;
     default:

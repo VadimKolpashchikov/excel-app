@@ -52,6 +52,8 @@
   "browserslist": "> 0.25%, not dead",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.isequal": "^4.5.0",
     "normalize.css": "^8.0.1"
   }
 }

@@ -14,11 +14,11 @@ class Dom {
   }
 
   text(value) {
-    if (typeof value === 'string') {
+    if (typeof value !== 'undefined') {
       this.$el.textContent = value;
       return this;
     }
-    return this.$el.textContent?.trim() ?? this.$el.value?.trim();
+    return this.$el.textContent?.trim() || this.$el.value?.trim() || '';
   }
 
   clear() {
@@ -70,12 +70,15 @@ class Dom {
   }
 
   attr(name, value) {
-    if (!value) {
+    if (value) {
+      this.$el.setAttribute(name, value);
+      return this;
+    }
+    if (typeof value === 'undefined') {
       return this.$el.getAttribute(name);
     }
 
-    this.$el.setAttribute(name, value);
-
+    this.$el.removeAttribute(name);
     return this;
   }
 
@@ -96,19 +99,43 @@ class Dom {
     return this.$el.getBoundingClientRect();
   }
 
-  css(styles = {}) {
-    if (typeof styles === 'string') {
-      return window.getComputedStyle(this.$el)[styles];
+  css(styles) {
+    if (!styles) {
+      return this.$el.style;
     }
+    if (typeof styles === 'string') {
+      const { style: elStyle } = this.$el;
 
-    Object.entries(styles).forEach(([key, value]) => {
-      if (key.slice(0, 2) === '--') {
-        this.$el.style.setProperty(key, value);
+      if (Object.prototype.hasOwnProperty.call(elStyle, styles)) {
+        return elStyle[styles];
       }
-      this.$el.style[key] = value;
-    });
 
-    return this;
+      return null;
+    }
+    if (Array.isArray(styles)) {
+      const preparedStyles = styles.reduce((result, key) => {
+        const value = this.css(key.toString());
+        if (value) {
+          result[key] = value;
+        }
+        return result;
+      }, {});
+
+      return Object.keys(preparedStyles).length
+        ? preparedStyles
+        : null;
+    }
+    if (typeof styles === 'object') {
+      Object.entries(styles).forEach(([key, value]) => {
+        if (key.slice(0, 2) === '--') {
+          this.$el.style.setProperty(key, value);
+        }
+        this.$el.style[key] = value;
+      });
+
+      return this;
+    }
+    return null;
   }
 
   focus() {

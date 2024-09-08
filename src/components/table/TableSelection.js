@@ -1,3 +1,5 @@
+import { parseExpression } from '@core/parser';
+
 /* eslint-disable import/prefer-default-export */
 export class TableSelection {
   constructor() {
@@ -24,6 +26,23 @@ export class TableSelection {
     this.group = cells.map((cell) => {
       cell.addClass(TableSelection.selectedClassName);
       return cell;
+    });
+  }
+
+  get selectedIds() {
+    return this.group.map((cell) => cell.id());
+  }
+
+  applyStyles(styles = {}) {
+    this.group.forEach((el) => {
+      el.css(styles);
+    });
+  }
+
+  applyValue(value = '') {
+    this.group.forEach((el) => {
+      el.attr('data-value', value)
+        .text(parseExpression(value));
     });
   }
 }

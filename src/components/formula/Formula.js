@@ -1,5 +1,5 @@
 import { ExcelComponent } from '@core/ExcelComponent';
-import { keyMap } from '@core/const';
+import * as keyMap from '@const/keyboardKeys';
 import { $ } from '@core/dom';
 
 /* eslint-disable import/prefer-default-export */
@@ -19,13 +19,16 @@ export class Formula extends ExcelComponent {
     this.formula = this.$root.find('[data-type="formula"]');
 
     this.$on('table:select', (cell) => {
-      this.formula?.text(cell.text());
-    });
-
-    this.$on('table:input', (cell) => {
-      this.formula?.text(cell.text());
+      const formulaText = cell.data.value ?? '';
+      this.formula?.text(formulaText);
     });
   }
+
+  watchers = {
+    lastInputValue(newVal) {
+      this.formula?.text(newVal);
+    },
+  };
 
   onInput(event) {
     this.$emit('formula:input', $(event.target).text());
@@ -33,8 +36,8 @@ export class Formula extends ExcelComponent {
 
   onKeydown(event) {
     switch (event.key) {
-      case keyMap.tab:
-      case keyMap.enter:
+      case keyMap.TAB:
+      case keyMap.ENTER:
         event.preventDefault();
         this.$emit('formula:done');
         break;
@@ -50,7 +53,7 @@ export class Formula extends ExcelComponent {
     return this;
   }
 
-  $html = /* html */`
+  $template = /* html */`
     <div class="excel-formula__info">fx</div>
     <div 
       class="excel-formula__input" 

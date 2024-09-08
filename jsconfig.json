@@ -6,6 +6,12 @@
             "@core/*": [
                 "./src/core/*"
             ],
+            "@const/*": [
+                "./src/const/*"
+            ],
+            "@store": [
+                "./src/store/*"
+            ],
             "@components/*": [
                 "./src/components/*"
             ],

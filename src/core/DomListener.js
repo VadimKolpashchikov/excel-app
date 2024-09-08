@@ -1,8 +1,4 @@
-import { capitalize } from '@core/utils';
-
-function getMethodName(eventName) {
-  return `on${capitalize(eventName)}`;
-}
+import { getListenerMethodName } from '@core/utils';
 
 /* eslint-disable import/prefer-default-export */
 export class DomListener {
@@ -16,7 +12,7 @@ export class DomListener {
 
   initDOMListeners() {
     this.listeners.forEach((listener) => {
-      const method = getMethodName(listener);
+      const method = getListenerMethodName(listener);
 
       if (!this[method]) {
         throw new Error(`Method ${method} is not implemented in ${this.$name} Component`);
@@ -29,7 +25,7 @@ export class DomListener {
 
   removeDOMListeners() {
     this.listeners.forEach((listener) => {
-      const method = getMethodName(listener);
+      const method = getListenerMethodName(listener);
       this.$root.off(listener, this[method]);
     });
   }

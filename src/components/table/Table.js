@@ -1,6 +1,7 @@
 import { ExcelComponent } from '@core/ExcelComponent';
 import { $ } from '@core/dom';
-import { keyMap } from '@core/const';
+import * as keyMap from '@const/keyboardKeys';
+import { actions } from '@store';
 import { createTable } from './table.template';
 import { resizeHandler } from './table.resize';
 import { TableSelection } from './TableSelection';
@@ -37,8 +38,20 @@ export class Table extends ExcelComponent {
       this.selectionManager.current.focus();
     });
 
-    this.$on('formula:input', (text) => {
-      this.selectionManager.current.text(text);
+    this.$on('formula:input', (value) => {
+      this.selectionManager.applyValue(value);
+      this.$dispatch(actions.applyValue({
+        ids: this.selectionManager.selectedIds,
+        value,
+      }));
+    });
+
+    this.$on('toolbar:applyStyle', (styles) => {
+      this.selectionManager.applyStyles(styles);
+      this.$dispatch(actions.applyStyles({
+        ids: this.selectionManager.selectedIds,
+        styles,
+      }));
     });
   }
 
@@ -48,13 +61,29 @@ export class Table extends ExcelComponent {
     this.$emit('table:select', cell);
   }
 
+  selectCells(cells) {
+    this.selectionManager.selectGroup(cells);
+    this.$emit('table:selectGroup', cells);
+  }
+
   onInput() {
-    this.$emit('table:input', this.selectionManager.current);
+    const { current } = this.selectionManager;
+    current.attr('data-value', current.text());
+    const { id, value } = current.data;
+    this.$dispatch(actions.changeText({ id, value }));
+  }
+
+  resizeTable(event) {
+    resizeHandler(this.$root, event)
+      .then((data) => {
+        this.$dispatch(actions.tableResize(data));
+      })
+      .catch(() => { throw new Error('Table resize error'); });
   }
 
   onMousedown(event) {
     if (isResizable(event)) {
-      resizeHandler(this.$root, event);
+      this.resizeTable(event);
     } else if (isCell(event)) {
       const target = $(event.target);
 
@@ -62,10 +91,9 @@ export class Table extends ExcelComponent {
         const cells = matrix(target, this.selectionManager.current)
           .map((id) => this.$root.find(`[data-id="${id}"]`));
 
-        this.selectionManager.selectGroup(cells);
+        this.selectCells(cells);
       } else {
-        this.selectionManager.select(target);
-        this.$emit('table:select', target);
+        this.selectCell(target);
       }
     }
   }
@@ -85,5 +113,5 @@ export class Table extends ExcelComponent {
     return this;
   }
 
-  $html = createTable(150);
+  $template = createTable(150, this.$store.getState());
 }

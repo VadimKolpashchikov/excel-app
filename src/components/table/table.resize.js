@@ -29,36 +29,45 @@ function resizeHeight(coordY, resizer, initCoords) {
 
 /* eslint-disable import/prefer-default-export */
 export function resizeHandler(root, event) {
-  const resizeType = event.target.dataset.resize;
-  const resizer = $(event.target);
-  const resizerParent = resizer.closest('[data-type="resizable"]');
-  const initCoords = resizerParent.coords;
-  let value;
+  return new Promise((resolve) => {
+    const resizer = $(event.target);
+    const resizeType = resizer.data.resize;
+    const resizerParent = resizer.closest('[data-type="resizable"]');
+    const initCoords = resizerParent.coords;
+    const dataId = resizerParent.data[resizeType];
+    let value;
 
-  resizer.addClass('active')
-    .css({ opacity: 1 });
+    resizer.addClass('active')
+      .css({ opacity: 1 });
 
-  document.onmousemove = (e) => {
-    if (resizeType === 'col') {
-      value = resizeWidth(e.pageX, resizer, initCoords);
-    } else if (resizeType === 'row') {
-      value = resizeHeight(e.pageY, resizer, initCoords);
-    }
-  };
+    document.onmousemove = (e) => {
+      if (resizeType === 'col') {
+        value = resizeWidth(e.pageX, resizer, initCoords);
+      } else if (resizeType === 'row') {
+        value = resizeHeight(e.pageY, resizer, initCoords);
+      }
+    };
 
-  document.onmouseup = () => {
-    if (resizeType === 'col') {
-      root.findAll(`[data-col="${resizerParent.data.col}"]`)
-        .forEach((el) => {
-          el.css({ width: `${value}px` });
-        });
-    } else if (resizeType === 'row') {
-      resizerParent.css({ height: `${value}px` });
-    }
+    document.onmouseup = () => {
+      if (resizeType === 'col') {
+        root.findAll(`[data-col="${dataId}"]`)
+          .forEach((el) => {
+            el.css({ width: `${value}px` });
+          });
+      } else if (resizeType === 'row') {
+        resizerParent.css({ height: `${value}px` });
+      }
 
-    resizer.removeClass('active')
-      .css({ right: 0, bottom: 0, opacity: 0 });
-    document.onmousemove = null;
-    document.onmouseup = null;
-  };
+      resolve({
+        type: resizeType,
+        id: dataId,
+        value,
+      });
+
+      resizer.removeClass('active')
+        .css({ right: 0, bottom: 0, opacity: 0 });
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
+  });
 }
