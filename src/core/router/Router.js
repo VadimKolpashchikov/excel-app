@@ -15,6 +15,8 @@ export class Router {
     }
 
     this.routes = routes;
+    this.routesName = Object.keys(routes);
+    this.page = null;
 
     this.init();
   }
@@ -25,13 +27,23 @@ export class Router {
     this.pageChangeHandler();
   }
 
-  pageChangeHandler() {
-    const Page = this.routes.excel;
-    const page = new Page();
-    this.$root.append(page.getRoot());
-    // .html(`<h1>${activeRoute.path}</h1>`);
+  pageChangeHandler(event) {
+    if (activeRoute.incorrectPath) {
+      event?.preventDefault();
+      activeRoute.adjustPath(activeRoute.path);
+      return;
+    }
 
-    page.afterRender();
+    this.$root.clear();
+    this.page?.destroy();
+    const routeName = this.routesName.find(
+      (key) => activeRoute.path.includes(key),
+    );
+
+    const Page = this.routes[routeName] ?? this.routes.dashboard;
+    this.page = new Page(activeRoute.params);
+    this.$root.append(this.page.getRoot());
+    this.page.afterRender();
   }
 
   destroy() {

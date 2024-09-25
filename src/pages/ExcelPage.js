@@ -11,6 +11,8 @@ import { debounce, storage } from '@core/utils';
 export class ExcelPage extends Page {
   /* eslint-disable class-methods-use-this */
   getRoot() {
+    console.log('params', this.params);
+
     const EXCEL_STORAGE_NAME = 'exele-state';
     const store = createStore(rootReducer, storage(EXCEL_STORAGE_NAME) ?? {});
 

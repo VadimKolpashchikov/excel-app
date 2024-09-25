@@ -3,8 +3,16 @@ class ActiveRoute {
     return window.location.hash.slice(1);
   }
 
-  static get param() {
-    return ActiveRoute.path.split('/')[1];
+  static get params() {
+    return ActiveRoute.path.slice(1).split('/')[1];
+  }
+
+  static get incorrectPath() {
+    return !window.location.hash || ActiveRoute.path.charAt(0) !== '/';
+  }
+
+  static adjustPath(path = '') {
+    window.location.hash = `/${path}`;
   }
 }
 
