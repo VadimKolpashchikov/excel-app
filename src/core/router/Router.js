@@ -36,6 +36,7 @@ export class Router {
 
     this.$root.clear();
     this.page?.destroy();
+
     const routeName = this.routesName.find(
       (key) => activeRoute.path.includes(key),
     );
