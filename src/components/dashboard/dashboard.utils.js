@@ -1,9 +1,15 @@
+import { mainPrefix } from '@const/storage';
+import { storage } from '@core/utils';
 /* eslint-disable import/prefer-default-export */
-export function getRecordTemplate() {
+export function getRecordTemplate(key) {
+  const data = storage(key);
+  const title = data.title ?? '?????';
+  const date = new Date(+data.dateStamp).toLocaleString();
+
   return /* html */`
     <li class="dashboard__record">
-      <a href="#">Table name 1</a>
-      <strong>11.11.1111</strong>
+      <a href="#/excel/${data.dateStamp}">${title}</a>
+      <strong>${date}</strong>
     </li>
   `;
 }
@@ -18,7 +24,7 @@ function getAllStorageKeys() {
   for (let i = 0; i < localStorage.length; i += 1) {
     const key = localStorage.key(i);
 
-    if (key.includes('excel')) {
+    if (key.includes(mainPrefix)) {
       result.push(key);
     }
   }

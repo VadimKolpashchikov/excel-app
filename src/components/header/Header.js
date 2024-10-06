@@ -1,4 +1,3 @@
-import { defaultTitle } from '@const/title';
 import { ExcelComponent } from '@core/ExcelComponent';
 import { actions } from '@store';
 
@@ -29,15 +28,13 @@ export class Header extends ExcelComponent {
   }
 
   get template() {
-    const initValue = this.$store.getState('title') || defaultTitle;
-
     return /* html */`
     <input
       type="text"
       class="input excel-header__input"
       placeholder="Новая таблица"
       id="${this.$titleInputId}"
-      value="${initValue}"
+      value="${this.$store.getState('title')}"
     />
     <div class="excel-header__buttons">
       <button class="btn" type="button">

@@ -1,3 +1,4 @@
+import { unnamedTitle } from '@const/title';
 import * as types from './actionsTypes';
 /* eslint-disable import/prefer-default-export */
 export function rootReducer(state, { type, data = {} }) {
@@ -46,7 +47,7 @@ export function rootReducer(state, { type, data = {} }) {
         cellState: { ...state.cellState, ...assister },
       };
     case types.CHANGE_TITLE:
-      return { ...state, title: data.title };
+      return { ...state, title: data.title || unnamedTitle };
     default:
       return state;
   }
