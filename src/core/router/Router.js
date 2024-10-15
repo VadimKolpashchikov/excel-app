@@ -42,7 +42,7 @@ export class Router {
     );
 
     const Page = this.routes[routeName] ?? this.routes.dashboard;
-    this.page = new Page(activeRoute.params);
+    this.page = new Page(activeRoute.param);
 
     this.page.beforeRender();
     this.$root.append(this.page.getRoot());

@@ -1,6 +1,7 @@
 import { Emitter } from '@core/Emitter';
 import { Subscriber } from '@core/Subscriber';
 import { $ } from '@core/dom';
+import { actions } from '@store';
 
 /* eslint-disable import/prefer-default-export */
 export class Excel {
@@ -8,17 +9,17 @@ export class Excel {
 
   constructor(options) {
     this.components = options.components || [];
-    this.store = options.store;
-    this.emitter = new Emitter();
-    this.subscriber = new Subscriber(this.store);
+    this.$store = options.store;
+    this.$emitter = new Emitter();
+    this.$subscriber = new Subscriber(this.$store);
   }
 
   getRoot() {
     const root = $.createEl('div', this.$className);
 
     const componetsOptions = {
-      emitter: this.emitter,
-      store: this.store,
+      emitter: this.$emitter,
+      store: this.$store,
     };
 
     this.components = this.components.map((Component) => {
@@ -34,14 +35,15 @@ export class Excel {
   }
 
   init() {
-    this.subscriber.subscribeComponents(this.components);
+    this.$subscriber.subscribeComponents(this.components);
     this.components.forEach((component) => {
       component.init();
     });
+    this.$store.dispatch(actions.updateLastLogin());
   }
 
   destroy() {
-    this.subscriber.unsubscribeAll();
+    this.$subscriber.unsubscribeAll();
     this.components.forEach((component) => {
       component.destroy();
     });

@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 export class Page {
-  constructor(params) {
-    this.params = params;
+  constructor(param) {
+    this.param = param;
   }
 
   /* eslint-disable class-methods-use-this */

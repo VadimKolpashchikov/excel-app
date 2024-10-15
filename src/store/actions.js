@@ -34,3 +34,9 @@ export function changeTitle(data) {
     data,
   };
 }
+
+export function updateLastLogin() {
+  return {
+    type: types.CHANGE_LAST_LOGIN,
+  };
+}

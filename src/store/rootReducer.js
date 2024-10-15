@@ -48,6 +48,8 @@ export function rootReducer(state, { type, data = {} }) {
       };
     case types.CHANGE_TITLE:
       return { ...state, title: data.title || unnamedTitle };
+    case types.CHANGE_LAST_LOGIN:
+      return { ...state, lastLogin: new Date().toJSON() };
     default:
       return state;
   }
