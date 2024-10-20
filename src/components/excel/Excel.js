@@ -39,7 +39,7 @@ export class Excel {
     this.components.forEach((component) => {
       component.init();
     });
-    this.$store.dispatch(actions.updateLastLogin());
+    this.$store.dispatch(actions.updateLastChange());
   }
 
   destroy() {

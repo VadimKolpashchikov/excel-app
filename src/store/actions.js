@@ -35,8 +35,8 @@ export function changeTitle(data) {
   };
 }
 
-export function updateLastLogin() {
+export function updateLastChange() {
   return {
-    type: types.CHANGE_LAST_LOGIN,
+    type: types.UPDATE_LAST_CHANGE,
   };
 }
