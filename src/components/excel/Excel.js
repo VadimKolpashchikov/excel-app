@@ -35,6 +35,9 @@ export class Excel {
   }
 
   init() {
+    if (process.env.NODE_ENV === 'prodaction') {
+      document.oncontextmenu = (e) => e.preventDefault();
+    }
     this.$subscriber.subscribeComponents(this.components);
     this.components.forEach((component) => {
       component.init();
@@ -47,5 +50,8 @@ export class Excel {
     this.components.forEach((component) => {
       component.destroy();
     });
+    if (process.env.NODE_ENV === 'prodaction') {
+      document.oncontextmenu = null;
+    }
   }
 }
