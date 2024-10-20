@@ -1,3 +1,4 @@
+import { unnamedTitle } from '@const/title';
 import * as types from './actionsTypes';
 /* eslint-disable import/prefer-default-export */
 export function rootReducer(state, { type, data = {} }) {
@@ -11,6 +12,7 @@ export function rootReducer(state, { type, data = {} }) {
           ...state[assister],
           [data.id]: data.value,
         },
+        lastChange: new Date().toJSON(),
       };
     case types.CHANGE_TEXT:
       assister = state.cellState?.[data.id] ?? {};
@@ -19,6 +21,7 @@ export function rootReducer(state, { type, data = {} }) {
         ...state,
         lastInputValue: data.value ?? '',
         cellState: { ...state.cellState, [data.id]: assister },
+        lastChange: new Date().toJSON(),
       };
     case types.APPLY_VALUE:
       assister = data.ids?.reduce((acc, id) => {
@@ -32,6 +35,7 @@ export function rootReducer(state, { type, data = {} }) {
         ...state,
         lastInputValue: data.value ?? '',
         cellState: { ...state.cellState, ...assister },
+        lastChange: new Date().toJSON(),
       };
     case types.APPLY_STYLES:
       assister = data.ids?.reduce((acc, id) => {
@@ -44,9 +48,16 @@ export function rootReducer(state, { type, data = {} }) {
       return {
         ...state,
         cellState: { ...state.cellState, ...assister },
+        lastChange: new Date().toJSON(),
       };
     case types.CHANGE_TITLE:
-      return { ...state, title: data.title };
+      return {
+        ...state,
+        title: data.title || unnamedTitle,
+        lastChange: new Date().toJSON(),
+      };
+    case types.UPDATE_LAST_CHANGE:
+      return { ...state, lastChange: new Date().toJSON() };
     default:
       return state;
   }

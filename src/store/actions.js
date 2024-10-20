@@ -34,3 +34,9 @@ export function changeTitle(data) {
     data,
   };
 }
+
+export function updateLastChange() {
+  return {
+    type: types.UPDATE_LAST_CHANGE,
+  };
+}

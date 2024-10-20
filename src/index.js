@@ -1,29 +1,10 @@
-import { Excel } from '@components/excel/Excel';
-import { Header } from '@components/header/Header';
-import { Toolbar } from '@components/toolbar/Toolbar';
-import { Formula } from '@components/formula/Formula';
-import { Table } from '@components/table/Table';
+import { Router } from '@core/router/Router';
 import './scss/style.scss';
-import { createStore, rootReducer } from '@store';
-import { debounce, storage } from '@core/utils';
+import { DashboardPage } from './pages/DashboardPage';
+import { ExcelPage } from './pages/ExcelPage';
 
-const EXCEL_STORAGE_NAME = 'exele-state';
-const store = createStore(rootReducer, storage(EXCEL_STORAGE_NAME) ?? {});
-
-const storageStateListener = debounce((state) => {
-  storage(EXCEL_STORAGE_NAME, state);
+/* eslint-disable no-unused-vars */
+const router = new Router('#app', {
+  dashboard: DashboardPage,
+  excel: ExcelPage,
 });
-
-store.subscribe(storageStateListener);
-
-const excel = new Excel('#app', {
-  store,
-  components: [
-    Header,
-    Toolbar,
-    Formula,
-    Table,
-  ],
-});
-
-excel.render();
