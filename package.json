@@ -39,6 +39,7 @@
     "eslint-webpack-plugin": "^4.0.1",
     "html-webpack-plugin": "^5.6.0",
     "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "mini-css-extract-plugin": "^2.7.7",
     "postcss-lit": "^1.1.1",
     "prettier": "^3.2.5",
