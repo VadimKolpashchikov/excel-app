@@ -1,4 +1,4 @@
-import { $ } from '@core/dom';
+import { $ } from '@core/methods/dom';
 import { activeRoute } from './ActiveRoute';
 
 /* eslint-disable import/prefer-default-export */

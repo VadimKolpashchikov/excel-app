@@ -1,5 +1,5 @@
-import { parseExpression } from '@core/parser';
-import { kebabize } from '@core/utils';
+import { parseExpression } from '@core/methods/parser';
+import { kebabize } from '@core/methods/utils';
 
 const KEY_CODE_MAP = {
   A: 65,

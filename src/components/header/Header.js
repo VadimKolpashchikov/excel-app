@@ -1,8 +1,8 @@
 import { mainPrefix } from '@const/storage';
-import { $ } from '@core/dom';
-import { ExcelComponent } from '@core/ExcelComponent';
-import { activeRoute } from '@core/router/ActiveRoute';
-import { storage } from '@core/Storage';
+import { $ } from '@core/methods/dom';
+import { ExcelComponent } from '@core/component/ExcelComponent';
+import { activeRoute } from '@router/ActiveRoute';
+import { storage } from '@storage/Storage';
 import { actions } from '@store';
 
 /* eslint-disable import/prefer-default-export */

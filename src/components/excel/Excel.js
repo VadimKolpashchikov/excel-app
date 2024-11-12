@@ -1,6 +1,6 @@
-import { Emitter } from '@core/Emitter';
-import { Subscriber } from '@core/Subscriber';
-import { $ } from '@core/dom';
+import { Emitter } from '@core/plagins/Emitter';
+import { Subscriber } from '@core/plagins/Subscriber';
+import { $ } from '@core/methods/dom';
 import { actions } from '@store';
 
 /* eslint-disable import/prefer-default-export */

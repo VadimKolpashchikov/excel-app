@@ -1,4 +1,4 @@
-import { getListenerMethodName } from '@core/utils';
+import { getListenerMethodName } from '@core/methods/utils';
 
 /* eslint-disable import/prefer-default-export */
 export class DomListener {

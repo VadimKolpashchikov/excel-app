@@ -1,4 +1,4 @@
-import { Page } from '@core/Page';
+import { Page } from '@core/page/Page';
 import { Dashboard } from '@components/dashboard/Dashboard';
 
 /* eslint-disable import/prefer-default-export */

@@ -1,4 +1,4 @@
-import { $ } from '@core/dom';
+import { $ } from '@core/methods/dom';
 
 const MIN_WIDTH = 40;
 const MIN_HEIGHT = 20;

@@ -1,5 +1,5 @@
-import { ExcelComponent } from '@core/ExcelComponent';
-import { $ } from '@core/dom';
+import { ExcelComponent } from '@core/component/ExcelComponent';
+import { $ } from '@core/methods/dom';
 import * as keyMap from '@const/keyboardKeys';
 import { actions } from '@store';
 import { createTable } from './table.template';

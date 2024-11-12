@@ -1,6 +1,6 @@
-import { ExcelComponent } from '@core/ExcelComponent';
+import { ExcelComponent } from '@core/component/ExcelComponent';
 import * as keyMap from '@const/keyboardKeys';
-import { $ } from '@core/dom';
+import { $ } from '@core/methods/dom';
 
 /* eslint-disable import/prefer-default-export */
 export class Formula extends ExcelComponent {

@@ -9,8 +9,14 @@
             "@const/*": [
                 "./src/const/*"
             ],
+            "@router/*": [
+                "./src/router/*"
+            ],
             "@store": [
                 "./src/store/*"
+            ],
+            "@storage": [
+                "./src/storage/*"
             ],
             "@components/*": [
                 "./src/components/*"

@@ -1,4 +1,4 @@
-import { $ } from '@core/dom';
+import { $ } from '@core/methods/dom';
 import { createRecordsTable, getNewTableHref } from './dashboard.utils';
 
 /* eslint-disable import/prefer-default-export */
