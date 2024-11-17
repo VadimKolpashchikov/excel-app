@@ -1,4 +1,4 @@
-import { DomListener } from '@core/DomListener';
+import { DomListener } from '@core/component/DomListener';
 
 /* eslint-disable import/prefer-default-export */
 export class ExcelComponent extends DomListener {

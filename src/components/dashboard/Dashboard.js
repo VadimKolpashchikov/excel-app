@@ -1,4 +1,4 @@
-import { $ } from '@core/dom';
+import { $ } from '@core/methods/dom';
 import { createRecordsTable, getNewTableHref } from './dashboard.utils';
 
 /* eslint-disable import/prefer-default-export */
@@ -10,7 +10,7 @@ export class Dashboard {
 
     root.html(/* html */`
         <div class="dashboard__header">
-          <h1>5V-Excel. Dashboard</h1>
+          <h1>5Vecel. Dashboard</h1>
         </div>
 
         <div class="dashboard__controls">

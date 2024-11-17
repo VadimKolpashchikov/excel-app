@@ -1,4 +1,4 @@
-import { Page } from '../../Page';
+import { Page } from '../../core/page/Page';
 
 export const content = 'MockExcelPage';
 

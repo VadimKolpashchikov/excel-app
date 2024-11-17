@@ -1,4 +1,5 @@
-import { $ } from '@core/dom';
+import { $ } from '@core/methods/dom';
+import { Loader } from '@components/loader/Loader';
 import { activeRoute } from './ActiveRoute';
 
 /* eslint-disable import/prefer-default-export */
@@ -9,6 +10,7 @@ export class Router {
     }
 
     this.$root = $(selector);
+    this.$loader = new Loader();
 
     if (!this.$root) {
       throw new Error(`Element by selector ${selector} is not found`);
@@ -27,26 +29,33 @@ export class Router {
     this.pageChangeHandler();
   }
 
-  pageChangeHandler(event) {
+  async pageChangeHandler(event) {
+    let isStoping = false;
     if (activeRoute.incorrectPath) {
       event?.preventDefault();
       activeRoute.adjustPath(activeRoute.path);
       return;
     }
 
-    this.$root.clear();
+    this.$root.clear().append(this.$loader);
     this.page?.destroy();
-
     const routeName = this.routesName.find(
       (key) => activeRoute.path.includes(key),
     );
-
     const Page = this.routes[routeName] ?? this.routes.dashboard;
     this.page = new Page(activeRoute.param);
 
-    this.page.beforeRender();
-    this.$root.append(this.page.getRoot());
-    this.page.afterRender();
+    // BEFORE RENDER
+    this.page.beforeRender(() => { isStoping = true; });
+
+    if (!isStoping) {
+      // RENDER
+      const pageRoot = await this.page.getRoot();
+      this.$root.clear().append(pageRoot);
+
+      // AFTER RENDER
+      this.page.afterRender();
+    }
   }
 
   destroy() {

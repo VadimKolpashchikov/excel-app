@@ -1,4 +1,4 @@
-import { Router } from '@core/router/Router';
+import { Router } from '@router/Router';
 import './scss/style.scss';
 import { DashboardPage } from './pages/DashboardPage';
 import { ExcelPage } from './pages/ExcelPage';

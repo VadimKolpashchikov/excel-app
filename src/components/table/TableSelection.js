@@ -1,4 +1,4 @@
-import { parseExpression } from '@core/parser';
+import { parseExpression } from '@core/methods/parser';
 
 /* eslint-disable import/prefer-default-export */
 export class TableSelection {

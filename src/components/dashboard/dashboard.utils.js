@@ -1,5 +1,5 @@
 import { mainPrefix } from '@const/storage';
-import { storage } from '@core/Storage';
+import { storage } from '@storage/Storage';
 
 function recordsMaper(key) {
   const data = storage.get(key);

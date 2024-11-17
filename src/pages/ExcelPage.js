@@ -1,52 +1,45 @@
-import { Page } from '@core/Page';
+import { Page } from '@core/page/Page';
 import { Excel } from '@components/excel/Excel';
 import { Header } from '@components/header/Header';
 import { Toolbar } from '@components/toolbar/Toolbar';
 import { Formula } from '@components/formula/Formula';
 import { Table } from '@components/table/Table';
 import { createStore, rootReducer } from '@store';
-import { debounce } from '@core/utils';
-import { storage } from '@core/Storage';
-import { activeRoute } from '@core/router/ActiveRoute';
-import { mainPrefix } from '@const/storage';
-import { initState } from '@const/initState';
+import { StateManager } from '@core/plagins/StateManager';
+import { activeRoute } from '@router/ActiveRoute';
+import { LocalStorageManager } from '@storage/LocalStorageManager';
 
 /* eslint-disable import/prefer-default-export */
 export class ExcelPage extends Page {
-  /* eslint-disable class-methods-use-this */
-  getRoot() {
-    const EXCEL_STORAGE_NAME = `${mainPrefix}${this.param}`;
-    const savedState = storage.get(EXCEL_STORAGE_NAME);
+  constructor(param) {
+    super(param);
 
-    if (!savedState) {
-      storage.set(EXCEL_STORAGE_NAME, initState);
-    }
+    this.storeSub = null;
+    this.stateManager = new StateManager(
+      new LocalStorageManager(param),
+    );
+  }
 
-    const store = createStore(rootReducer, savedState ?? initState);
-
-    const storageStateListener = debounce((state) => {
-      storage.set(EXCEL_STORAGE_NAME, state);
-    });
-
-    store.subscribe(storageStateListener);
-
+  async getRoot() {
+    const state = await this.stateManager.get();
+    const store = createStore(rootReducer, state);
+    this.storeSub = store.subscribe(this.stateManager.listen);
     this.viewModel = new Excel({
       store,
-      components: [
-        Header,
-        Toolbar,
-        Formula,
-        Table,
-      ],
+      components: [Header, Toolbar, Formula, Table],
     });
 
     return this.viewModel.getRoot();
   }
 
-  beforeRender() {
-    if (!this.param || !Number(this.param)) {
+  beforeRender(stop) {
+    if (!Number(this.param)) {
       activeRoute.adjustPath();
+      stop();
+      return;
     }
+
+    this.stateManager.init();
   }
 
   afterRender() {
@@ -54,6 +47,8 @@ export class ExcelPage extends Page {
   }
 
   destroy() {
-    this.viewModel.destroy();
+    this.storeSub?.unsubscribe();
+    this.storeSub = null;
+    this.viewModel?.destroy();
   }
 }

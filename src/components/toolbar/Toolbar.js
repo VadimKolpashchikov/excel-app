@@ -1,5 +1,5 @@
-import { $ } from '@core/dom';
-import { StateComponent } from '@core/StateComponent';
+import { $ } from '@core/methods/dom';
+import { StateComponent } from '@core/component/StateComponent';
 import { defaultStyles } from '@const/defaultStyles';
 import { createToolbar } from './toolbar.template';
 
