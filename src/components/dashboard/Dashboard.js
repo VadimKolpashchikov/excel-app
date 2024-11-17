@@ -10,7 +10,7 @@ export class Dashboard {
 
     root.html(/* html */`
         <div class="dashboard__header">
-          <h1>5V-Excel. Dashboard</h1>
+          <h1>5Vecel. Dashboard</h1>
         </div>
 
         <div class="dashboard__controls">
